@@ -3,7 +3,7 @@ public class SimResults {
     int floorCount; // ile przejechanych pięter
     int passengerTime; // jak długo łącznie czekali pasażerowie
     int stopCount; // ile razy winda się zatrzymała
-    int allPassengers; // nie pamiętam
+    int allPassengers; // wszyscy pasażerowie
 
     public SimResults()
     {

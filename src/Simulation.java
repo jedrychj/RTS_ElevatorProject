@@ -68,6 +68,7 @@ public class Simulation {
     }
 
     public SimResults SimEnd(){
+        this.R.passengerTime=this.R.passengerTime/this.R.allPassengers;
         return this.R;
     }
 
@@ -118,6 +119,8 @@ public class Simulation {
                 // spawning passengers
                 this.passengersOut.add(new Passenger(this.P.mode, 0, this.P.maxFloor, this.randomGenerator));
                 this.E.AddCall(this.passengersOut.getLast());
+
+                this.R.allPassengers++;
             }
         }
     }

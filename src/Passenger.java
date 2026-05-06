@@ -7,12 +7,12 @@ public class Passenger {
 
     public Passenger(int mode, int minFloor, int maxFloor, Random gen)
     {
+        waitTime = 0;
         if(mode == 0) {           // random mode
             fromFloor = gen.nextInt(minFloor, maxFloor+1);
             do {
                 toFloor = gen.nextInt(minFloor, maxFloor+1);
             }while (toFloor != fromFloor);
-            waitTime = 0;
         }
         else if (mode == 1) {     // go to work mode
             if (gen.nextInt(6)<4){

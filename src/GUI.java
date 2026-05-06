@@ -30,6 +30,13 @@ public class GUI implements ActionListener{
     JLabel doorTimeLabel;
     JLabel regularTimeLabel;
 
+    JLabel result1;
+    JLabel result2;
+    JLabel result3;
+    JLabel result4;
+    JLabel resultLabel;
+    boolean resultsShown;
+
     JLabel FloorNumLabel;
     JLabel FloorDefaultLabel;
 
@@ -237,6 +244,8 @@ public class GUI implements ActionListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Symulator windy");
         frame.setVisible(true);
+
+        resultsShown=false;
     }
 
     @Override
@@ -268,6 +277,8 @@ public class GUI implements ActionListener{
             }
 
         } else if (action.getSource() == simulateButton) {
+            if(resultsShown)
+                ClearResults();
             Simulation sim = new Simulation(parameters);
             sim.SimStart();
             ShowResults(sim.SimEnd());
@@ -352,27 +363,37 @@ public class GUI implements ActionListener{
     }
 
     private void ShowResults(SimResults res){
-        JLabel resultLabel = new JLabel("Wyniki symulacji", SwingConstants.CENTER);
+        resultLabel = new JLabel("Wyniki symulacji", SwingConstants.CENTER);
         resultLabel.setBounds(10, yResults+10, 610, 25);
         layers.add(resultLabel,10);
 
-        JLabel result1 = new JLabel("Liczba obsłużonych pasażerów: "+res.passengersCount, SwingConstants.CENTER);
+        result1 = new JLabel("Liczba obsłużonych pasażerów: "+res.passengersCount, SwingConstants.CENTER);
         result1.setBounds(10, yResults + 35, 300, 25);
         layers.add(result1,10);
 
-        JLabel result2 = new JLabel("Liczba pokonanych pięter: "+res.floorCount, SwingConstants.CENTER);
+        result2 = new JLabel("Liczba pokonanych pięter: "+res.floorCount, SwingConstants.CENTER);
         result2.setBounds(10, yResults + 70, 300, 25);
         layers.add(result2,10);
 
-        JLabel result3 = new JLabel("Średni czas obsłużenia pasażera: "+res.passengerTime, SwingConstants.CENTER);
+        result3 = new JLabel("Średni czas obsłużenia pasażera: "+res.passengerTime, SwingConstants.CENTER);
         result3.setBounds(310, yResults + 35, 300, 25);
         layers.add(result3,10);
 
-        JLabel result4 = new JLabel("Liczba zatrzymań: "+res.stopCount, SwingConstants.CENTER);
+        result4 = new JLabel("Liczba zatrzymań: "+res.stopCount, SwingConstants.CENTER);
         result4.setBounds(310, yResults + 70, 300, 25);
         layers.add(result4,10);
+
+        resultsShown=true;
     }
 
+    private void ClearResults()
+    {
+        layers.remove(result1);
+        layers.remove(result2);
+        layers.remove(result3);
+        layers.remove(result4);
+        layers.remove(resultLabel);
+    }
 }
 
 // kolory: button.setBackground(new Color(120, 200, 150));
