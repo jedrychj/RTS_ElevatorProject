@@ -48,17 +48,21 @@ public class Simulation {
                 this.E.Ride();
             }
 
-            if(this.E.standby){
-                if (this.E.calls.contains(this.E.pos)){
-                    this.E.standby=false;
-                    this.OpenDoors();
-                }
-                else {
-                    if (!this.E.calls.isEmpty()) {
-                        this.E.standby=false;
-                        this.E.Depart();
-                    }
-                }
+//            if(this.E.standby){ // zwykły standby, że po prostu stoi i czeka
+//                if (this.E.calls.contains(this.E.pos)){
+//                    this.E.standby=false;
+//                    this.OpenDoors();
+//                }
+//                else {
+//                    if (!this.E.calls.isEmpty()) {
+//                        this.E.standby=false;
+//                        this.E.Depart();
+//                    }
+//                }
+//            }
+
+            if (this.E.standby) { // standby z podjazdem do domyślnego piętra
+
             }
 
             this.UpdatePassengers();
@@ -101,7 +105,7 @@ public class Simulation {
         this.E.calls.remove(this.E.pos);
 
         if (this.E.calls.isEmpty())
-            this.E.standby=true;
+            this.E.ActivateStandby(); // this.E.stanby = true <- w trybie zwykłego standby
         else
             this.E.Depart();
     }

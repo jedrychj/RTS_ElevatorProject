@@ -111,5 +111,63 @@ public class Elevator {
         this.currentTravelTime--;
     }
 
+    public void ActivateStandby(){
+        this.standby = true;
+        this.stopping = true;
+        if (this.pos == this.defaultFloor)
+            return;
+        this.currentTravelTime = this.accelTime + this.travelTime;
+        if (this.pos > this.defaultFloor){
+            // w dół
+            this.direction = false;
+            if (this.defaultFloor == this.pos - 1)
+                this.currentTravelTime += accelTime;
+            else
+                this.stopping = false;
+        }
+        else {
+            // w górę
+            this.direction = true;
+            if (this.defaultFloor == this.pos + 1)
+                this.currentTravelTime += accelTime;
+            else
+                this.stopping = false;
+        }
+    }
+
+    public void CheckStandby(){
+        //this.currentTravelTime--;
+        if (this.calls.isEmpty())
+            return;
+        else {
+            this.standby = false;
+            this.travelling = true;
+            for (int c : this.calls){
+                if (this.defaultFloor == c) // jeżeli jedzie na to samo piętro to nic nie trzeba robić
+                    return;
+                if (this.direction){
+                    if (this.pos + 1 == c) {
+                        this.stopping = true;
+                        this.currentTravelTime += this.accelTime;
+                    }
+                    if (this.pos >= c){
+                        this.ReverseDirection(c);
+
+                    }
+                }
+            }
+        }
+    }
+
+    public int ReverseDirection(int c){
+        int t = this.travelTime - this.currentTravelTime + 2*this.accelTime;
+        if(stopping)
+            t += this.accelTime;
+        if (this.pos == c) {
+            this.stopping = true;
+            t += this.accelTime;
+        }
+        return t;
+    }
 
 }
