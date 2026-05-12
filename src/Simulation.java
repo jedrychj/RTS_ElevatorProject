@@ -19,6 +19,8 @@ public class Simulation {
         passengersOut = new ArrayList<>();
 
         System.out.println("Symulacja");
+
+        System.out.println(P.passTime);
     }
 
     public void SimStart(){
@@ -61,6 +63,25 @@ public class Simulation {
 //                }
 //            }
 
+            if (this.E.standby) {
+                if (this.E.CheckStandby()){ // od razu sprawdzanie czy nie należy zakończyć
+                    if (!this.E.finishStandby) {
+                        if (this.E.currentTravelTime == 0) { // co jeżeli skończy jazdę
+                            this.R.floorCount++;
+                            if (this.E.direction)
+                                this.E.pos++;
+                            else
+                                this.E.pos--;
+                            if (this.E.stopping)
+                                this.E.finishStandby = true;
+                            else
+                                this.E.ContinueStandby();
+                        }
+                        this.E.currentTravelTime--;
+                    }
+                }
+            }
+
             if (this.E.standby) { // standby z podjazdem do domyślnego piętra
 
             }
@@ -73,6 +94,9 @@ public class Simulation {
 
     public SimResults SimEnd(){
         this.R.passengerTime=this.R.passengerTime/this.R.allPassengers;
+
+        System.out.println("Wszyscy pasażerowie" + R.allPassengers);
+        System.out.println("Obsłużeni pasażerowie" + R.passengersCount);
         return this.R;
     }
 

@@ -268,12 +268,15 @@ public class GUI implements ActionListener{
             if (passFreqMode == 0){
                 passFreqMode = 1;
                 passFreqButton.setText("Liczba pasażerów: Duża");
+                parameters.passTime = SimParams.deHighPassTime;
             } else if (passFreqMode == 1) {
                 passFreqMode = 2;
                 passFreqButton.setText("Liczba pasażerów: Mała");
+                parameters.passTime = SimParams.deLowPassTime;
             } else {
                 passFreqMode = 0;
                 passFreqButton.setText("Liczba pasażerów: Umiarkowana");
+                parameters.passTime = SimParams.deMediumPassTime;
             }
 
         } else if (action.getSource() == simulateButton) {
@@ -331,22 +334,22 @@ public class GUI implements ActionListener{
     }
 
     private void InvalidData() {
-        parameters.maxFloor = 5;
-        maxFloorField.setText("5");
-        parameters.defaultFloor = 0;
-        defaultFloorField.setText("0");
+        parameters.maxFloor = SimParams.deMaxFloor;
+        maxFloorField.setText(""+parameters.maxFloor);
+        parameters.defaultFloor = SimParams.deDefaultFloor;
+        defaultFloorField.setText(""+parameters.defaultFloor);
 
-        parameters.passTime = 4;
+        parameters.passTime = SimParams.deLowPassTime;
         passTimeField.setText(""+parameters.passTime);
-        parameters.passChance = 10;
+        parameters.passChance = SimParams.dePassChance;
         passChanceField.setText(""+parameters.passChance);
-        parameters.simTime = 10000;
+        parameters.simTime = SimParams.deSimTime;
         simTimeField.setText(""+parameters.simTime);
-        parameters.accelTime = 3;
+        parameters.accelTime = SimParams.deAccelTime;
         accelTimeField.setText(""+parameters.accelTime);
-        parameters.doorTime = 10;
+        parameters.doorTime = SimParams.deDoorTime;
         doorTimeField.setText(""+parameters.doorTime);
-        parameters.regularTime = 10;
+        parameters.regularTime = SimParams.deRegularTime;
         regularTimeField.setText(""+parameters.regularTime);
     }
 

@@ -13,6 +13,7 @@ public class Elevator {
 
     boolean direction; // true - up; false - down
     boolean standby;
+    boolean finishStandby;
     //int travelling; // 0 - stoi, 1 - ruch bez zatrzymania, 2 - ruch z postoju, 3 - ruch z zatrzymaniem, 4 - ruch z postoju i z zatrzymaniem
     boolean travelling;
     boolean stopping; // jeżeli winda ma się zatrzymać na następnym piętrze
@@ -33,6 +34,7 @@ public class Elevator {
         pos = P.defaultFloor;
 
         standby = true;
+        finishStandby = true;
         direction = true;
         travelling = false;
         stopping = false;
@@ -135,39 +137,79 @@ public class Elevator {
         }
     }
 
-    public void CheckStandby(){
-        //this.currentTravelTime--;
-        if (this.calls.isEmpty())
-            return;
-        else {
+    public boolean CheckStandby(){
+        if (!this.calls.isEmpty()){
             this.standby = false;
+            this.finishStandby = false;
             this.travelling = true;
-            for (int c : this.calls){
-                if (this.defaultFloor == c) // jeżeli jedzie na to samo piętro to nic nie trzeba robić
-                    return;
-                if (this.direction){
-                    if (this.pos + 1 == c) {
-                        this.stopping = true;
+            if(this.direction) {
+                if (this.calls.contains(this.pos+1)){
+                    if (!this.stopping)
                         this.currentTravelTime += this.accelTime;
-                    }
-                    if (this.pos >= c){
-                        this.ReverseDirection(c);
-
+                    this.stopping = true;
+                    return false;
+                }
+                for (int c : this.calls){
+                    if (c>this.pos) {
+                        if (this.stopping)
+                            this.currentTravelTime -= this.accelTime;
+                        this.stopping = false;
+                        return false;
                     }
                 }
             }
+            else {
+                if (this.calls.contains(this.pos-1)){
+                    if (!this.stopping)
+                        this.currentTravelTime += this.accelTime;
+                    this.stopping = true;
+                    return false;
+                }
+                for (int c : this.calls){
+                    if (c<this.pos) {
+                        if (this.stopping)
+                            this.currentTravelTime -= this.accelTime;
+                        this.stopping = false;
+                        return false;
+                    }
+                }
+            }
+            this.currentTravelTime = this.ReverseDirection();
+            return false;
         }
+        return true;
     }
 
-    public int ReverseDirection(int c){
+    public int ReverseDirection(){
         int t = this.travelTime - this.currentTravelTime + 2*this.accelTime;
-        if(stopping)
+        if(this.stopping)
             t += this.accelTime;
-        if (this.pos == c) {
+        if (this.calls.contains(this.pos)) { // jeżeli musi tylko zawrócić na piętro, przy którym tuż wcześniej było
             this.stopping = true;
             t += this.accelTime;
         }
+        this.direction = !this.direction;
         return t;
+    }
+
+    public void ContinueStandby(){
+        this.currentTravelTime = this.travelTime;
+
+        if(this.direction){
+            if(this.calls.contains(this.pos+1)){
+                this.currentTravelTime += this.accelTime;
+                this.stopping = true;
+            } else {
+                this.stopping = false;
+            }
+        } else {
+            if(this.calls.contains(this.pos-1)){
+                this.currentTravelTime += this.accelTime;
+                this.stopping = true;
+            } else {
+                this.stopping = false;
+            }
+        }
     }
 
 }
