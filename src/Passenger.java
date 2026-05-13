@@ -12,7 +12,7 @@ public class Passenger {
             fromFloor = gen.nextInt(minFloor, maxFloor+1);
             do {
                 toFloor = gen.nextInt(minFloor, maxFloor+1);
-            }while (toFloor != fromFloor);
+            }while (toFloor == fromFloor);
         }
         else if (mode == 1) {     // go to work mode
             if (gen.nextInt(6)<4){
@@ -22,7 +22,7 @@ public class Passenger {
             }
             do {
                 fromFloor = gen.nextInt(minFloor, maxFloor+1);
-            }while (toFloor != fromFloor);
+            }while (toFloor == fromFloor);
         }
         else if (mode == 2) {     // coming back from work mode
             if (gen.nextInt(6)<4){
@@ -32,7 +32,7 @@ public class Passenger {
             }
             do {
                 toFloor = gen.nextInt(minFloor, maxFloor+1);
-            }while (toFloor != fromFloor);
+            }while (toFloor == fromFloor);
         }
     }
 

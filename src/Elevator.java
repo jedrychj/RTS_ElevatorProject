@@ -138,9 +138,14 @@ public class Elevator {
     }
 
     public boolean CheckStandby(){
+        if (!this.calls.isEmpty() && this.finishStandby){
+            this.standby = false;
+            this.stopping = true;
+            this.Depart();
+            return false;
+        }
         if (!this.calls.isEmpty()){
             this.standby = false;
-            this.finishStandby = false;
             this.travelling = true;
             if(this.direction) {
                 if (this.calls.contains(this.pos+1)){
@@ -196,14 +201,14 @@ public class Elevator {
         this.currentTravelTime = this.travelTime;
 
         if(this.direction){
-            if(this.calls.contains(this.pos+1)){
+            if(this.defaultFloor == this.pos+1){
                 this.currentTravelTime += this.accelTime;
                 this.stopping = true;
             } else {
                 this.stopping = false;
             }
         } else {
-            if(this.calls.contains(this.pos-1)){
+            if(this.defaultFloor == this.pos-1){
                 this.currentTravelTime += this.accelTime;
                 this.stopping = true;
             } else {

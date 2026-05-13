@@ -24,8 +24,7 @@ public class Simulation {
     }
 
     public void SimStart(){
-        int i;
-        for (i=0; i<this.P.simTime; i++){
+        for (int i=0; i<this.P.simTime; i++){
             this.trySpawning(i);
 
             if(this.E.doors){ // obsługa odliczania czasu drzwi i zamknięcia
@@ -82,10 +81,6 @@ public class Simulation {
                 }
             }
 
-            if (this.E.standby) { // standby z podjazdem do domyślnego piętra
-
-            }
-
             this.UpdatePassengers();
         }
 
@@ -122,6 +117,7 @@ public class Simulation {
         for (int j=0; j<this.passengersOut.size(); j++){
             if (this.passengersOut.get(j).fromFloor==this.E.pos){
                 this.E.passengersIn.add(this.passengersOut.get(j));
+                this.E.calls.add(this.passengersOut.get(j).toFloor);
                 this.passengersOut.remove(j);
                 j--;
             }
