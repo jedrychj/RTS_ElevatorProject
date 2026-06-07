@@ -22,7 +22,7 @@ public class Passenger {
             }
             do {
                 fromFloor = gen.nextInt(minFloor, maxFloor+1);
-            }while (toFloor == fromFloor);
+            }while (toFloor == fromFloor || toFloor < fromFloor-4); // aby pasażerowie pojawiali się nie niżej niż 4 najwyższe piętra
         }
         else if (mode == 2) {     // coming back from work mode
             if (gen.nextInt(6)<4){
@@ -35,6 +35,17 @@ public class Passenger {
             }while (toFloor == fromFloor);
         }
     }
-
-
 }
+
+/*
+else if (mode == 1) {     // go to work mode
+            if (gen.nextInt(6)<4){
+                toFloor = 0;
+            } else {
+                toFloor = gen.nextInt(minFloor, maxFloor+1);
+            }
+            do {
+                fromFloor = gen.nextInt(minFloor, maxFloor+1);
+            }while (toFloor == fromFloor);
+        }
+ */
